@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Summit Academy Chosei - 2026 Annual Schedule / サミットアカデミー長聖 2026年度 年間行事予定表</title>
+  <title>Weber Family 2026 School Schedules — Summit Academy & Nagano Kindergarten</title>
   <style>
     :root {
       --bg: #fafafa;
@@ -161,9 +161,23 @@
       font-weight: 500;
     }
 
-    .col-jp, .col-en {
-      width: calc((100% - 76px) / 2);
+    .col-summit-jp, .col-summit-en, .col-kg-jp, .col-kg-en {
+      width: calc((100% - 76px) / 4);
     }
+
+    .col-divider {
+      width: 3px;
+      padding: 0 !important;
+      background: var(--border) !important;
+    }
+
+    th.col-summit-header, th.col-kg-header {
+      text-align: center;
+      font-size: 0.75em;
+      letter-spacing: 0;
+    }
+
+    .tag-kg { background: #e3f2fd; color: #0d47a1; }
 
     .sat { color: var(--saturday); }
     .sun { color: var(--sunday); }
@@ -218,15 +232,15 @@
 <body>
 
 <div class="page-header">
-  <h1>サミットアカデミー長聖 2026年度 年間行事予定表</h1>
-  <div class="subtitle">Summit Academy Chosei — 2026 Annual School Schedule</div>
-  <div class="draft">＜原案＞ Draft as of 2026/3/12</div>
+  <h1>2026年度 年間行事予定表 — Family School Schedules</h1>
+  <div class="subtitle">サミットアカデミー長聖 Summit Academy Chosei &nbsp;|&nbsp; 信学会長野幼稚園 Shingakukai Nagano Kindergarten</div>
 </div>
 
 <div class="legend">
   <div class="legend-item"><span class="legend-dot" style="background:var(--event-e)"></span> <strong>E</strong> = Elementary / 小学校</div>
   <div class="legend-item"><span class="legend-dot" style="background:var(--event-s)"></span> <strong>S</strong> = Secondary / 中高</div>
   <div class="legend-item"><span class="legend-dot" style="background:var(--event-es)"></span> <strong>ES</strong> = Both / 小中高共通</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#0d47a1"></span> <strong>KG</strong> = Kindergarten / 幼稚園</div>
   <div class="legend-item"><span class="legend-dot" style="background:var(--holiday)"></span> National Holiday / 祝日</div>
   <div class="legend-item"><span class="legend-dot" style="background:var(--closed)"></span> School Closed / 閉校</div>
   <div class="legend-item"><span class="legend-dot" style="background:var(--planned)"></span> Planned Holiday / 計画休業</div>
@@ -910,6 +924,168 @@ for (const bp of breakPeriods) {
   }
 }
 
+// Kindergarten schedule: Shingakukai Nagano Kindergarten (信学会長野幼稚園)
+const kindergarten = {
+  "April 2026": {
+    6: [{jp:"始業式", en:"Opening Ceremony"}],
+    8: [{jp:"入園式", en:"Entrance Ceremony"}],
+    10: [{jp:"園外保育（年長）", en:"Field Trip (Senior)"}],
+    14: [{jp:"体操教室", en:"Gymnastics Class"}],
+    15: [{jp:"身体測定", en:"Physical Measurement"}],
+    18: [{jp:"参観日・懇談会", en:"Observation Day & Discussion"}],
+    22: [{jp:"お誕生会", en:"Birthday Party"}],
+    23: [{jp:"英語教室", en:"English Class"}],
+    24: [{jp:"避難訓練", en:"Evacuation Drill"}],
+  },
+  "May 2026": {
+    1: [{jp:"こどもの日の集い", en:"Children's Day Event"}],
+    8: [{jp:"園外保育", en:"Field Trip"}],
+    12: [{jp:"体操教室", en:"Gymnastics Class"}],
+    13: [{jp:"内科検診", en:"Medical Checkup"}],
+    14: [{jp:"歯科検診", en:"Dental Checkup"}],
+    20: [{jp:"お誕生会", en:"Birthday Party"}],
+    21: [{jp:"英語教室", en:"English Class"}],
+    26: [{jp:"交通安全教室", en:"Traffic Safety Class"}],
+    27: [{jp:"避難訓練", en:"Evacuation Drill"}],
+    30: [{jp:"保育参加（年少）", en:"Parent Childcare Day (Junior)"}],
+  },
+  "June 2026": {
+    2: [{jp:"体操教室", en:"Gymnastics Class"}],
+    3: [{jp:"プール開き", en:"Pool Opening"}],
+    4: [{jp:"英語教室", en:"English Class"}],
+    9: [{jp:"眼科検診", en:"Eye Exam"}],
+    10: [{jp:"園外保育", en:"Field Trip"}],
+    12: [{jp:"歯みがき指導", en:"Tooth Brushing Guidance"}],
+    16: [{jp:"体操教室", en:"Gymnastics Class"}],
+    18: [{jp:"お誕生会", en:"Birthday Party"}],
+    23: [{jp:"保育参加（年中）", en:"Parent Childcare Day (Middle)"}],
+    24: [{jp:"避難訓練", en:"Evacuation Drill"}],
+    26: [{jp:"英語教室", en:"English Class"}],
+    30: [{jp:"保育参加（年長）", en:"Parent Childcare Day (Senior)"}],
+  },
+  "July 2026": {
+    2: [{jp:"七夕の集い", en:"Tanabata Festival"}],
+    7: [{jp:"体操教室", en:"Gymnastics Class"}],
+    9: [{jp:"英語教室", en:"English Class"}],
+    10: [{jp:"お誕生会", en:"Birthday Party"}],
+    15: [{jp:"避難訓練", en:"Evacuation Drill"}],
+    17: [{jp:"終業式", en:"Closing Ceremony"}],
+    18: [{jp:"夏期保育", en:"Summer Childcare"}],
+    21: [{jp:"夏期保育", en:"Summer Childcare"}],
+    22: [{jp:"夏期保育", en:"Summer Childcare"}],
+  },
+  "August 2026": {
+    25: [{jp:"始業式", en:"Opening Ceremony"}],
+    27: [{jp:"お誕生会", en:"Birthday Party"}],
+  },
+  "September 2026": {
+    1: [{jp:"体操教室", en:"Gymnastics Class"}],
+    3: [{jp:"英語教室", en:"English Class"}],
+    4: [{jp:"園外保育", en:"Field Trip"}],
+    10: [{jp:"避難訓練", en:"Evacuation Drill"}],
+    16: [{jp:"お誕生会", en:"Birthday Party"}],
+    17: [{jp:"運動会予行練習", en:"Sports Day Rehearsal"}],
+    19: [{jp:"運動会", en:"Sports Day"}],
+    29: [{jp:"体操教室", en:"Gymnastics Class"}],
+  },
+  "October 2026": {
+    1: [{jp:"英語教室", en:"English Class"}],
+    2: [{jp:"園外保育", en:"Field Trip"}],
+    6: [{jp:"体操教室", en:"Gymnastics Class"}],
+    8: [{jp:"お誕生会", en:"Birthday Party"}],
+    9: [{jp:"いもほり", en:"Sweet Potato Digging"}],
+    15: [{jp:"英語教室", en:"English Class"}],
+    20: [{jp:"体操教室", en:"Gymnastics Class"}],
+    22: [{jp:"避難訓練", en:"Evacuation Drill"}],
+    27: [{jp:"参観日", en:"Observation Day"}],
+  },
+  "November 2026": {
+    5: [{jp:"七五三の集い", en:"Shichi-Go-San Celebration"}],
+    6: [{jp:"園外保育", en:"Field Trip"}],
+    10: [{jp:"体操教室", en:"Gymnastics Class"}],
+    12: [{jp:"英語教室", en:"English Class"}],
+    18: [{jp:"お誕生会", en:"Birthday Party"}],
+    19: [{jp:"避難訓練", en:"Evacuation Drill"}],
+    24: [{jp:"体操教室", en:"Gymnastics Class"}],
+    26: [{jp:"英語教室", en:"English Class"}],
+  },
+  "December 2026": {
+    1: [{jp:"体操教室", en:"Gymnastics Class"}],
+    3: [{jp:"英語教室", en:"English Class"}],
+    9: [{jp:"おもちつき", en:"Rice Cake Pounding"}],
+    10: [{jp:"お誕生会", en:"Birthday Party"}],
+    15: [{jp:"体操教室", en:"Gymnastics Class"}],
+    16: [{jp:"避難訓練", en:"Evacuation Drill"}],
+    18: [{jp:"クリスマス会", en:"Christmas Party"}],
+    22: [{jp:"終業式", en:"Closing Ceremony"}],
+  },
+  "January 2027": {
+    7: [{jp:"始業式", en:"Opening Ceremony"}],
+    13: [{jp:"体操教室", en:"Gymnastics Class"}],
+    14: [{jp:"お誕生会", en:"Birthday Party"}],
+    15: [{jp:"英語教室", en:"English Class"}],
+    20: [{jp:"避難訓練", en:"Evacuation Drill"}],
+    26: [{jp:"体操教室", en:"Gymnastics Class"}],
+    28: [{jp:"英語教室", en:"English Class"}],
+  },
+  "February 2027": {
+    2: [{jp:"豆まき", en:"Bean Throwing (Setsubun)"}],
+    5: [{jp:"英語教室", en:"English Class"}],
+    8: [{jp:"参観日", en:"Observation Day"}],
+    9: [{jp:"体操教室", en:"Gymnastics Class"}],
+    12: [{jp:"お誕生会", en:"Birthday Party"}],
+    17: [{jp:"避難訓練", en:"Evacuation Drill"}],
+    19: [{jp:"英語教室", en:"English Class"}],
+    24: [{jp:"体操教室", en:"Gymnastics Class"}],
+  },
+  "March 2027": {
+    2: [{jp:"体操教室", en:"Gymnastics Class"}],
+    3: [{jp:"ひなまつりの集い", en:"Hinamatsuri (Girls' Day)"}],
+    4: [{jp:"英語教室", en:"English Class"}],
+    5: [{jp:"お誕生会", en:"Birthday Party"}],
+    9: [{jp:"お別れ会", en:"Farewell Party"}],
+    16: [{jp:"卒園式", en:"Graduation Ceremony"}],
+    17: [{jp:"修了式", en:"Completion Ceremony"}],
+  }
+};
+
+// Kindergarten break periods
+const kgBreakPeriods = [
+  { label_jp: "夏休み", label_en: "Summer Break", startMonth: "July 2026", startDay: 24, endMonth: "August 2026", endDay: 24 },
+  { label_jp: "閉園", label_en: "KG Closed", startMonth: "August 2026", startDay: 8, endMonth: "August 2026", endDay: 17 },
+  { label_jp: "冬休み", label_en: "Winter Break", startMonth: "December 2026", startDay: 23, endMonth: "January 2027", endDay: 6 },
+  { label_jp: "閉園", label_en: "KG Closed", startMonth: "December 2026", startDay: 28, endMonth: "January 2027", endDay: 5 },
+  { label_jp: "春休み", label_en: "Spring Break", startMonth: "March 2027", startDay: 18, endMonth: "March 2027", endDay: 31 },
+];
+
+// Attach kg break info to schedule days
+for (const bp of kgBreakPeriods) {
+  let inRange = false;
+  for (const month of schedule) {
+    if (month.month_en === bp.startMonth) inRange = true;
+    if (!inRange) continue;
+    for (const day of month.days) {
+      const isStart = month.month_en === bp.startMonth && day.d >= bp.startDay;
+      const isEnd = month.month_en === bp.endMonth && day.d <= bp.endDay;
+      const isMid = month.month_en !== bp.startMonth && month.month_en !== bp.endMonth;
+      const inStartMonth = month.month_en === bp.startMonth && month.month_en === bp.endMonth
+        ? (day.d >= bp.startDay && day.d <= bp.endDay) : isStart;
+      const match = (bp.startMonth === bp.endMonth) ? inStartMonth : (isStart || isEnd || isMid);
+      if (match) {
+        day.kgBreak = { jp: bp.label_jp, en: bp.label_en };
+      }
+    }
+    if (month.month_en === bp.endMonth) break;
+  }
+}
+
+// Helper to get KG events for a day
+function getKgEvents(monthEn, dayNum) {
+  const m = kindergarten[monthEn];
+  if (!m) return null;
+  return m[dayNum] || null;
+}
+
 function getTagClass(tag) {
   if (!tag) return '';
   const t = tag.toUpperCase();
@@ -966,10 +1142,17 @@ function render() {
     html += `<table>
       <thead>
         <tr>
-          <th class="col-date">日 Date</th>
-          <th class="col-day">曜 Day</th>
-          <th class="col-jp">行事（日本語）Events (Japanese)</th>
-          <th class="col-en">Events (English)</th>
+          <th class="col-date" rowspan="2">日<br>Date</th>
+          <th class="col-day" rowspan="2">曜<br>Day</th>
+          <th class="col-summit-jp col-summit-header" colspan="2">🏫 サミットアカデミー長聖 / Summit Academy</th>
+          <th class="col-divider" rowspan="2"></th>
+          <th class="col-kg-jp col-kg-header" colspan="2">🎒 信学会長野幼稚園 / Nagano Kindergarten</th>
+        </tr>
+        <tr>
+          <th class="col-summit-jp">日本語</th>
+          <th class="col-summit-en">English</th>
+          <th class="col-kg-jp">日本語</th>
+          <th class="col-kg-en">English</th>
         </tr>
       </thead><tbody>`;
 
@@ -982,34 +1165,59 @@ function render() {
       html += `<td class="col-date ${dayClass}">${day.d}</td>`;
       html += `<td class="col-day ${dayClass}">${day.dow_jp} / ${day.dow}</td>`;
 
+      // --- Summit Academy columns ---
       if (day.onBreak && (!day.events || day.events.length === 0 || day.events.every(e => e.type === 'break')) && !day.holiday) {
-        // Days during a long break with no other events
         const extra = day.closed ? ' / 閉校' : '';
         const extraEn = day.closed ? ' / School Closed' : '';
-        html += `<td class="col-jp"><span class="tag tag-closed">休</span> ${day.onBreak.jp}${extra}</td>`;
-        html += `<td class="col-en"><span class="tag tag-closed">Break</span> ${day.onBreak.en}${extraEn}</td>`;
+        html += `<td class="col-summit-jp"><span class="tag tag-closed">休</span> ${day.onBreak.jp}${extra}</td>`;
+        html += `<td class="col-summit-en"><span class="tag tag-closed">Break</span> ${day.onBreak.en}${extraEn}</td>`;
       } else if (day.onBreak && day.holiday) {
-        // Holiday during a break
         const parts = day.holiday.split(' / ');
-        html += `<td class="col-jp"><span class="tag tag-closed">休</span> ${day.onBreak.jp} — ${parts[0]}</td>`;
-        html += `<td class="col-en"><span class="tag tag-closed">Break</span> ${day.onBreak.en} — ${parts[1] || parts[0]}</td>`;
+        html += `<td class="col-summit-jp"><span class="tag tag-closed">休</span> ${day.onBreak.jp} — ${parts[0]}</td>`;
+        html += `<td class="col-summit-en"><span class="tag tag-closed">Break</span> ${day.onBreak.en} — ${parts[1] || parts[0]}</td>`;
       } else if (day.onBreak && day.events && day.events.length > 0) {
-        // Break day but with an event (e.g. entrance exam during summer)
-        html += `<td class="col-jp"><span class="tag tag-closed">休</span> ${day.onBreak.jp}<br>${renderEvents(day.events.filter(e => e.type !== 'break'), 'jp')}</td>`;
-        html += `<td class="col-en"><span class="tag tag-closed">Break</span> ${day.onBreak.en}<br>${renderEvents(day.events.filter(e => e.type !== 'break'), 'en')}</td>`;
+        html += `<td class="col-summit-jp"><span class="tag tag-closed">休</span> ${day.onBreak.jp}<br>${renderEvents(day.events.filter(e => e.type !== 'break'), 'jp')}</td>`;
+        html += `<td class="col-summit-en"><span class="tag tag-closed">Break</span> ${day.onBreak.en}<br>${renderEvents(day.events.filter(e => e.type !== 'break'), 'en')}</td>`;
       } else if (day.holiday) {
         const parts = day.holiday.split(' / ');
-        html += `<td class="col-jp holiday-text">${parts[0]}</td>`;
-        html += `<td class="col-en holiday-text">${parts[1] || parts[0]}</td>`;
+        html += `<td class="col-summit-jp holiday-text">${parts[0]}</td>`;
+        html += `<td class="col-summit-en holiday-text">${parts[1] || parts[0]}</td>`;
       } else if (day.closed && (!day.events || day.events.length === 0)) {
-        html += `<td class="col-jp"><span class="tag tag-closed">閉校</span> 閉校日</td>`;
-        html += `<td class="col-en"><span class="tag tag-closed">Closed</span> School Closed</td>`;
+        html += `<td class="col-summit-jp"><span class="tag tag-closed">閉校</span> 閉校日</td>`;
+        html += `<td class="col-summit-en"><span class="tag tag-closed">Closed</span> School Closed</td>`;
       } else if (day.events && day.events.length > 0) {
-        html += `<td class="col-jp">${renderEvents(day.events, 'jp')}</td>`;
-        html += `<td class="col-en">${renderEvents(day.events, 'en')}</td>`;
+        html += `<td class="col-summit-jp">${renderEvents(day.events, 'jp')}</td>`;
+        html += `<td class="col-summit-en">${renderEvents(day.events, 'en')}</td>`;
       } else {
-        html += `<td class="col-jp no-event">—</td>`;
-        html += `<td class="col-en no-event">—</td>`;
+        html += `<td class="col-summit-jp no-event">—</td>`;
+        html += `<td class="col-summit-en no-event">—</td>`;
+      }
+
+      // --- Divider ---
+      html += `<td class="col-divider"></td>`;
+
+      // --- Kindergarten columns ---
+      const kgEvts = getKgEvents(month.month_en, day.d);
+      if (day.kgBreak && !kgEvts) {
+        html += `<td class="col-kg-jp"><span class="tag tag-closed">休</span> ${day.kgBreak.jp}</td>`;
+        html += `<td class="col-kg-en"><span class="tag tag-closed">Break</span> ${day.kgBreak.en}</td>`;
+      } else if (day.kgBreak && kgEvts) {
+        const kgJp = kgEvts.map(e => `<span class="tag tag-kg">KG</span>${e.jp}`).join('<br>');
+        const kgEn = kgEvts.map(e => `<span class="tag tag-kg">KG</span>${e.en}`).join('<br>');
+        html += `<td class="col-kg-jp"><span class="tag tag-closed">休</span> ${day.kgBreak.jp}<br>${kgJp}</td>`;
+        html += `<td class="col-kg-en"><span class="tag tag-closed">Break</span> ${day.kgBreak.en}<br>${kgEn}</td>`;
+      } else if (day.holiday) {
+        const parts = day.holiday.split(' / ');
+        html += `<td class="col-kg-jp holiday-text">${parts[0]}</td>`;
+        html += `<td class="col-kg-en holiday-text">${parts[1] || parts[0]}</td>`;
+      } else if (kgEvts) {
+        const kgJp = kgEvts.map(e => `<span class="tag tag-kg">KG</span>${e.jp}`).join('<br>');
+        const kgEn = kgEvts.map(e => `<span class="tag tag-kg">KG</span>${e.en}`).join('<br>');
+        html += `<td class="col-kg-jp">${kgJp}</td>`;
+        html += `<td class="col-kg-en">${kgEn}</td>`;
+      } else {
+        html += `<td class="col-kg-jp no-event">—</td>`;
+        html += `<td class="col-kg-en no-event">—</td>`;
       }
 
       html += `</tr>`;
@@ -1027,7 +1235,7 @@ document.addEventListener('DOMContentLoaded', render);
 <div id="app"></div>
 
 <div class="year-summary">
-  <strong>年間登校日数 / Total School Days: 202 (G2/G3: 201)</strong>
+  <strong>Summit Academy 年間登校日数 / Total School Days: 202 (G2/G3: 201)</strong>
 </div>
 
 </body>
