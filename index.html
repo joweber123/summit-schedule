@@ -91,7 +91,6 @@
       background: var(--card-bg);
       border-radius: 10px;
       border: 1px solid var(--border);
-      overflow: hidden;
     }
 
     .month-header {
@@ -101,7 +100,12 @@
       padding: 14px 20px;
       background: var(--header-bg);
       color: var(--header-text);
+      border-radius: 10px 10px 0 0;
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
+
 
     .month-header h2 {
       font-size: 1.25em;
@@ -129,7 +133,12 @@
       color: #666;
       background: #f8f8f8;
       border-bottom: 2px solid var(--border);
+      position: sticky;
+      z-index: 10;
     }
+
+    thead tr:first-child th { top: 53px; }
+    thead tr:nth-child(2) th { top: 80px; }
 
     tbody tr {
       border-bottom: 1px solid #f0f0f0;
@@ -161,8 +170,14 @@
       font-weight: 500;
     }
 
+    table { table-layout: fixed; width: 100%; }
+
+    .col-date { width: 40px; }
+    .col-day { width: 55px; }
+    .col-divider { width: 3px; }
+
     .col-summit-jp, .col-summit-en, .col-kg-jp, .col-kg-en {
-      width: calc((100% - 76px) / 4);
+      width: calc((100% - 40px - 55px - 3px) / 4);
     }
 
     .col-divider {
@@ -183,10 +198,10 @@
     .sun { color: var(--sunday); }
     .holiday-text { color: var(--holiday); font-weight: 500; }
 
+    .row-weekend { background: var(--closed-bg) !important; }
     .row-holiday { background: var(--holiday-bg) !important; }
-    .row-closed { background: var(--closed-bg) !important; }
-    .row-break { background: var(--break-bg) !important; }
-    .row-summit { background: var(--summit-bg) !important; }
+
+    .cell-closed { background: var(--closed-bg); }
 
     .tag {
       display: inline-block;
@@ -301,9 +316,7 @@ const schedule = [
         {tag:"E", jp:"参観日（午前）・学校説明会②（午後）", en:"Classroom Observation (AM) / School Info Session #2 (PM)"}
       ]},
       { d:26, dow:"Sun", dow_jp:"日", events:[] },
-      { d:27, dow:"Mon", dow_jp:"月", events:[
-        {tag:"", jp:"計画休業", en:"Planned Holiday", type:"planned"}
-      ]},
+      { d:27, dow:"Mon", dow_jp:"月", holiday:"振替休日 / Substitute Holiday" },
       { d:28, dow:"Tue", dow_jp:"火", events:[] },
       { d:29, dow:"Wed", dow_jp:"水", holiday:"昭和の日 / Shōwa Day" },
       { d:30, dow:"Thu", dow_jp:"木", events:[] },
@@ -314,9 +327,7 @@ const schedule = [
     school_days: "18 days",
     school_days_jp: "登校日: 18日",
     days: [
-      { d:1, dow:"Fri", dow_jp:"金", events:[
-        {tag:"", jp:"計画休業", en:"Planned Holiday", type:"planned"}
-      ]},
+      { d:1, dow:"Fri", dow_jp:"金", events:[] },
       { d:2, dow:"Sat", dow_jp:"土", events:[] },
       { d:3, dow:"Sun", dow_jp:"日", holiday:"憲法記念日 / Constitution Memorial Day" },
       { d:4, dow:"Mon", dow_jp:"月", holiday:"みどりの日 / Greenery Day" },
@@ -336,6 +347,7 @@ const schedule = [
         {tag:"ES", jp:"眼科検診（9:00）", en:"Eye Exam (9:00 AM)"}
       ]},
       { d:15, dow:"Fri", dow_jp:"金", events:[
+        {tag:"ES", jp:"尿検査", en:"Urinalysis"},
         {tag:"E", jp:"緊急時帰宅訓練", en:"Emergency Go-Home Drill"}
       ]},
       { d:16, dow:"Sat", dow_jp:"土", events:[] },
@@ -350,7 +362,8 @@ const schedule = [
         {tag:"ES", jp:"保護者懇談会③", en:"Parent-Teacher Conference #3"}
       ]},
       { d:21, dow:"Thu", dow_jp:"木", events:[
-        {tag:"ES", jp:"保護者懇談会④", en:"Parent-Teacher Conference #4"}
+        {tag:"ES", jp:"保護者懇談会④", en:"Parent-Teacher Conference #4"},
+        {tag:"ES", jp:"尿検査（予備日）", en:"Urinalysis (backup day)"}
       ]},
       { d:22, dow:"Fri", dow_jp:"金", events:[
         {tag:"ES", jp:"保護者懇談会⑤", en:"Parent-Teacher Conference #5"}
@@ -362,8 +375,7 @@ const schedule = [
       ]},
       { d:26, dow:"Tue", dow_jp:"火", events:[{tag:"", jp:"↳ Summit Week", en:"↳ Summit Week continues", type:"summit"}] },
       { d:27, dow:"Wed", dow_jp:"水", events:[
-        {tag:"", jp:"↳ Summit Week", en:"↳ Summit Week continues", type:"summit"},
-        {tag:"", jp:"計画休業", en:"Planned Holiday", type:"planned"}
+        {tag:"", jp:"↳ Summit Week", en:"↳ Summit Week continues", type:"summit"}
       ]},
       { d:28, dow:"Thu", dow_jp:"木", events:[{tag:"", jp:"↳ Summit Week", en:"↳ Summit Week continues", type:"summit"}] },
       { d:29, dow:"Fri", dow_jp:"金", events:[{tag:"", jp:"↳ Summit Week（最終日）", en:"↳ Summit Week (last day)", type:"summit"}] },
@@ -375,10 +387,12 @@ const schedule = [
   },
   {
     month_jp: "6月", month_en: "June 2026",
-    school_days: "21 days",
-    school_days_jp: "登校日: 21日",
+    school_days: "20 days",
+    school_days_jp: "登校日: 20日",
     days: [
-      { d:1, dow:"Mon", dow_jp:"月", events:[] },
+      { d:1, dow:"Mon", dow_jp:"月", events:[
+        {tag:"", jp:"計画休業", en:"Planned Holiday", type:"planned"}
+      ]},
       { d:2, dow:"Tue", dow_jp:"火", events:[] },
       { d:3, dow:"Wed", dow_jp:"水", events:[
         {tag:"ES", jp:"歯科検診", en:"Dental Checkup"}
@@ -458,8 +472,7 @@ const schedule = [
       { d:19, dow:"Sun", dow_jp:"日", events:[] },
       { d:20, dow:"Mon", dow_jp:"月", holiday:"海の日 / Marine Day" },
       { d:21, dow:"Tue", dow_jp:"火", events:[
-        {tag:"E", jp:"保護者懇談会①（I.T.面談希望者）", en:"Parent-Teacher Conference #1 (IT interview applicants)"},
-        {tag:"ES", jp:"職員会議・S授業研修", en:"Staff Meeting / Secondary Lesson Training"}
+        {tag:"E", jp:"保護者懇談会①（I.T.面談希望者）", en:"Parent-Teacher Conference #1 (IT interview applicants)"}
       ]},
       { d:22, dow:"Wed", dow_jp:"水", events:[
         {tag:"E", jp:"保護者懇談会②（I.T.面談希望者）", en:"Parent-Teacher Conference #2 (IT interview applicants)"}
@@ -512,7 +525,9 @@ const schedule = [
       { d:18, dow:"Tue", dow_jp:"火", events:[] },
       { d:19, dow:"Wed", dow_jp:"水", events:[] },
       { d:20, dow:"Thu", dow_jp:"木", events:[] },
-      { d:21, dow:"Fri", dow_jp:"金", events:[] },
+      { d:21, dow:"Fri", dow_jp:"金", events:[
+        {tag:"ES", jp:"職員会議・S授業研修", en:"Staff Meeting / Secondary Lesson Training"}
+      ]},
       { d:22, dow:"Sat", dow_jp:"土", events:[] },
       { d:23, dow:"Sun", dow_jp:"日", events:[] },
       { d:24, dow:"Mon", dow_jp:"月", events:[
@@ -520,9 +535,13 @@ const schedule = [
       ]},
       { d:25, dow:"Tue", dow_jp:"火", events:[] },
       { d:26, dow:"Wed", dow_jp:"水", events:[] },
-      { d:27, dow:"Thu", dow_jp:"木", events:[] },
+      { d:27, dow:"Thu", dow_jp:"木", events:[
+        {tag:"S", jp:"Parents Day", en:"Parents Day (Secondary)"}
+      ]},
       { d:28, dow:"Fri", dow_jp:"金", events:[] },
-      { d:29, dow:"Sat", dow_jp:"土", events:[] },
+      { d:29, dow:"Sat", dow_jp:"土", events:[
+        {tag:"E", jp:"学校説明会⑤（午後）", en:"School Info Session #5 (PM)"}
+      ]},
       { d:30, dow:"Sun", dow_jp:"日", events:[] },
       { d:31, dow:"Mon", dow_jp:"月", events:[] },
     ]
@@ -535,9 +554,7 @@ const schedule = [
       { d:1, dow:"Tue", dow_jp:"火", events:[
         {tag:"ES", jp:"避難訓練②", en:"Evacuation Drill #2"}
       ]},
-      { d:2, dow:"Wed", dow_jp:"水", events:[
-        {tag:"E", jp:"職員会議", en:"Staff Meeting"}
-      ]},
+      { d:2, dow:"Wed", dow_jp:"水", events:[] },
       { d:3, dow:"Thu", dow_jp:"木", events:[
         {tag:"E", jp:"参観日（G1）", en:"Classroom Observation (G1)"}
       ]},
@@ -546,9 +563,7 @@ const schedule = [
       ]},
       { d:5, dow:"Sat", dow_jp:"土", events:[] },
       { d:6, dow:"Sun", dow_jp:"日", events:[] },
-      { d:7, dow:"Mon", dow_jp:"月", events:[
-        {tag:"E", jp:"職員会議⑧", en:"Staff Meeting #8"}
-      ]},
+      { d:7, dow:"Mon", dow_jp:"月", events:[] },
       { d:8, dow:"Tue", dow_jp:"火", events:[] },
       { d:9, dow:"Wed", dow_jp:"水", events:[
         {tag:"ES", jp:"職員会議", en:"Staff Meeting"}
@@ -562,40 +577,31 @@ const schedule = [
       { d:14, dow:"Mon", dow_jp:"月", events:[] },
       { d:15, dow:"Tue", dow_jp:"火", events:[] },
       { d:16, dow:"Wed", dow_jp:"水", events:[] },
-      { d:17, dow:"Thu", dow_jp:"木", events:[
-        {tag:"E", jp:"運動会・学校説明会⑥", en:"Sports Day / School Info Session #6"}
-      ]},
+      { d:17, dow:"Thu", dow_jp:"木", events:[] },
       { d:18, dow:"Fri", dow_jp:"金", events:[
         {tag:"S", jp:"文化祭・探究中間発表", en:"Cultural Festival / Research Midterm Presentation"}
       ]},
       { d:19, dow:"Sat", dow_jp:"土", events:[
-        {tag:"ES", jp:"文化祭 / 学校説明会⑥", en:"Cultural Festival / School Info Session #6"},
-        {tag:"", jp:"計画休業", en:"Planned Holiday (after event)", type:"planned"}
+        {tag:"ES", jp:"文化祭 / 学校説明会⑥", en:"Cultural Festival / School Info Session #6"}
       ]},
       { d:20, dow:"Sun", dow_jp:"日", events:[] },
       { d:21, dow:"Mon", dow_jp:"月", holiday:"敬老の日 / Respect for the Aged Day" },
       { d:22, dow:"Tue", dow_jp:"火", holiday:"国民の祝日 / Citizens' Holiday" },
       { d:23, dow:"Wed", dow_jp:"水", holiday:"秋分の日 / Autumnal Equinox Day" },
-      { d:24, dow:"Thu", dow_jp:"木", events:[
-        {tag:"", jp:"計画休業", en:"Planned Holiday", type:"planned"}
-      ]},
+      { d:24, dow:"Thu", dow_jp:"木", holiday:"振替休日（9/19分）/ Substitute Holiday (for 9/19)" },
       { d:25, dow:"Fri", dow_jp:"金", events:[
         {tag:"", jp:"計画休業", en:"Planned Holiday", type:"planned"}
       ]},
       { d:26, dow:"Sat", dow_jp:"土", events:[] },
-      { d:27, dow:"Sun", dow_jp:"日", events:[
-        {tag:"S", jp:"Parents Day", en:"Parents Day (Secondary)"}
-      ]},
+      { d:27, dow:"Sun", dow_jp:"日", events:[] },
       { d:28, dow:"Mon", dow_jp:"月", events:[
         {tag:"E", jp:"Summit Week（〜10/2）", en:"Summit Week (through Oct 2)", type:"summit"}
       ]},
       { d:29, dow:"Tue", dow_jp:"火", events:[
-        {tag:"", jp:"↳ Summit Week", en:"↳ Summit Week continues", type:"summit"},
-        {tag:"E", jp:"Parents Day（G1・G2）", en:"Parents Day (G1 & G2)"}
+        {tag:"", jp:"↳ Summit Week", en:"↳ Summit Week continues", type:"summit"}
       ]},
       { d:30, dow:"Wed", dow_jp:"水", events:[
-        {tag:"", jp:"↳ Summit Week", en:"↳ Summit Week continues", type:"summit"},
-        {tag:"E", jp:"Parents Day（G3）", en:"Parents Day (G3)"}
+        {tag:"", jp:"↳ Summit Week", en:"↳ Summit Week continues", type:"summit"}
       ]},
     ]
   },
@@ -610,7 +616,9 @@ const schedule = [
       { d:4, dow:"Sun", dow_jp:"日", events:[] },
       { d:5, dow:"Mon", dow_jp:"月", events:[] },
       { d:6, dow:"Tue", dow_jp:"火", events:[] },
-      { d:7, dow:"Wed", dow_jp:"水", events:[] },
+      { d:7, dow:"Wed", dow_jp:"水", events:[
+        {tag:"E", jp:"職員会議⑧", en:"Staff Meeting #8"}
+      ]},
       { d:8, dow:"Thu", dow_jp:"木", events:[] },
       { d:9, dow:"Fri", dow_jp:"金", events:[] },
       { d:10, dow:"Sat", dow_jp:"土", events:[] },
@@ -620,11 +628,11 @@ const schedule = [
       { d:14, dow:"Wed", dow_jp:"水", events:[] },
       { d:15, dow:"Thu", dow_jp:"木", events:[] },
       { d:16, dow:"Fri", dow_jp:"金", events:[] },
-      { d:17, dow:"Sat", dow_jp:"土", events:[] },
-      { d:18, dow:"Sun", dow_jp:"日", events:[] },
-      { d:19, dow:"Mon", dow_jp:"月", events:[
-        {tag:"", jp:"計画休業", en:"Planned Holiday", type:"planned"}
+      { d:17, dow:"Sat", dow_jp:"土", events:[
+        {tag:"E", jp:"運動会・学校説明会⑥", en:"Sports Day / School Info Session #6"}
       ]},
+      { d:18, dow:"Sun", dow_jp:"日", events:[] },
+      { d:19, dow:"Mon", dow_jp:"月", holiday:"振替休日 / Substitute Holiday" },
       { d:20, dow:"Tue", dow_jp:"火", events:[
         {tag:"E", jp:"水泳授業 G1, G2", en:"Swimming Class (G1, G2)"}
       ]},
@@ -642,8 +650,12 @@ const schedule = [
         {tag:"E", jp:"水泳授業 G3", en:"Swimming Class (G3)"}
       ]},
       { d:28, dow:"Wed", dow_jp:"水", events:[] },
-      { d:29, dow:"Thu", dow_jp:"木", events:[] },
-      { d:30, dow:"Fri", dow_jp:"金", events:[] },
+      { d:29, dow:"Thu", dow_jp:"木", events:[
+        {tag:"E", jp:"Parents Day（G1・G2）", en:"Parents Day (G1 & G2)"}
+      ]},
+      { d:30, dow:"Fri", dow_jp:"金", events:[
+        {tag:"E", jp:"Parents Day（G3）", en:"Parents Day (G3)"}
+      ]},
       { d:31, dow:"Sat", dow_jp:"土", events:[] },
     ]
   },
@@ -685,9 +697,7 @@ const schedule = [
       { d:25, dow:"Wed", dow_jp:"水", events:[{tag:"", jp:"↳ Summit Week", en:"↳ Summit Week continues", type:"summit"}] },
       { d:26, dow:"Thu", dow_jp:"木", events:[{tag:"", jp:"↳ Summit Week", en:"↳ Summit Week continues", type:"summit"}] },
       { d:27, dow:"Fri", dow_jp:"金", events:[{tag:"", jp:"↳ Summit Week（最終日）", en:"↳ Summit Week (last day)", type:"summit"}] },
-      { d:28, dow:"Sat", dow_jp:"土", events:[
-        {tag:"S", jp:"Parents Day", en:"Parents Day (Secondary)"}
-      ]},
+      { d:28, dow:"Sat", dow_jp:"土", events:[] },
       { d:29, dow:"Sun", dow_jp:"日", events:[] },
       { d:30, dow:"Mon", dow_jp:"月", events:[] },
     ]
@@ -698,7 +708,9 @@ const schedule = [
     school_days_jp: "登校日: 18日",
     days: [
       { d:1, dow:"Tue", dow_jp:"火", events:[] },
-      { d:2, dow:"Wed", dow_jp:"水", events:[] },
+      { d:2, dow:"Wed", dow_jp:"水", events:[
+        {tag:"E", jp:"職員会議", en:"Staff Meeting"}
+      ]},
       { d:3, dow:"Thu", dow_jp:"木", events:[] },
       { d:4, dow:"Fri", dow_jp:"金", events:[] },
       { d:5, dow:"Sat", dow_jp:"土", events:[] },
@@ -778,24 +790,22 @@ const schedule = [
       { d:17, dow:"Sun", dow_jp:"日", events:[] },
       { d:18, dow:"Mon", dow_jp:"月", events:[] },
       { d:19, dow:"Tue", dow_jp:"火", events:[] },
-      { d:20, dow:"Wed", dow_jp:"水", events:[
-        {tag:"E", jp:"学習発表会・学級懇談会", en:"Learning Presentation / Class Discussion"}
-      ]},
+      { d:20, dow:"Wed", dow_jp:"水", events:[] },
       { d:21, dow:"Thu", dow_jp:"木", events:[] },
-      { d:22, dow:"Fri", dow_jp:"金", events:[
-        {tag:"", jp:"計画休業", en:"Planned Holiday", type:"planned"}
-      ]},
+      { d:22, dow:"Fri", dow_jp:"金", events:[] },
       { d:23, dow:"Sat", dow_jp:"土", events:[] },
       { d:24, dow:"Sun", dow_jp:"日", events:[] },
       { d:25, dow:"Mon", dow_jp:"月", events:[
         {tag:"E", jp:"Summit Week（〜29日）", en:"Summit Week (through Jan 29)", type:"summit"}
       ]},
       { d:26, dow:"Tue", dow_jp:"火", events:[
-        {tag:"", jp:"↳ Summit Week", en:"↳ Summit Week continues", type:"summit"},
-        {tag:"E", jp:"公開授業（午前）", en:"Open Classes (AM)"}
+        {tag:"", jp:"↳ Summit Week", en:"↳ Summit Week continues", type:"summit"}
       ]},
       { d:27, dow:"Wed", dow_jp:"水", events:[{tag:"", jp:"↳ Summit Week", en:"↳ Summit Week continues", type:"summit"}] },
-      { d:28, dow:"Thu", dow_jp:"木", events:[{tag:"", jp:"↳ Summit Week", en:"↳ Summit Week continues", type:"summit"}] },
+      { d:28, dow:"Thu", dow_jp:"木", events:[
+        {tag:"", jp:"↳ Summit Week", en:"↳ Summit Week continues", type:"summit"},
+        {tag:"S", jp:"Parents Day", en:"Parents Day (Secondary)"}
+      ]},
       { d:29, dow:"Fri", dow_jp:"金", events:[{tag:"", jp:"↳ Summit Week（最終日）", en:"↳ Summit Week (last day)", type:"summit"}] },
       { d:30, dow:"Sat", dow_jp:"土", events:[] },
       { d:31, dow:"Sun", dow_jp:"日", events:[] },
@@ -815,18 +825,13 @@ const schedule = [
         {tag:"E", jp:"新入生オリエンテーション（午前）", en:"New Student Orientation (AM)"}
       ]},
       { d:7, dow:"Sun", dow_jp:"日", events:[] },
-      { d:8, dow:"Mon", dow_jp:"月", events:[
-        {tag:"", jp:"計画休業", en:"Planned Holiday", type:"planned"}
-      ]},
+      { d:8, dow:"Mon", dow_jp:"月", events:[] },
       { d:9, dow:"Tue", dow_jp:"火", events:[] },
       { d:10, dow:"Wed", dow_jp:"水", events:[
-        {tag:"E", jp:"職員会議", en:"Staff Meeting"},
-        {tag:"E", jp:"Parents Day（G2）", en:"Parents Day (G2)"}
+        {tag:"E", jp:"職員会議", en:"Staff Meeting"}
       ]},
       { d:11, dow:"Thu", dow_jp:"木", events:[] },
-      { d:12, dow:"Fri", dow_jp:"金", events:[
-        {tag:"E", jp:"Parents Day（G1・G3）", en:"Parents Day (G1 & G3)"}
-      ]},
+      { d:12, dow:"Fri", dow_jp:"金", events:[] },
       { d:13, dow:"Sat", dow_jp:"土", events:[] },
       { d:14, dow:"Sun", dow_jp:"日", events:[] },
       { d:15, dow:"Mon", dow_jp:"月", events:[] },
@@ -836,15 +841,17 @@ const schedule = [
       ]},
       { d:18, dow:"Thu", dow_jp:"木", events:[] },
       { d:19, dow:"Fri", dow_jp:"金", events:[] },
-      { d:20, dow:"Sat", dow_jp:"土", events:[] },
-      { d:21, dow:"Sun", dow_jp:"日", events:[] },
-      { d:22, dow:"Mon", dow_jp:"月", events:[
-        {tag:"", jp:"計画休業", en:"Planned Holiday", type:"planned"}
+      { d:20, dow:"Sat", dow_jp:"土", events:[
+        {tag:"E", jp:"学習発表会・学級懇談会", en:"Learning Presentation / Class Discussion"}
       ]},
+      { d:21, dow:"Sun", dow_jp:"日", events:[] },
+      { d:22, dow:"Mon", dow_jp:"月", holiday:"振替休日 / Substitute Holiday" },
       { d:23, dow:"Tue", dow_jp:"火", holiday:"天皇誕生日 / Emperor's Birthday" },
       { d:24, dow:"Wed", dow_jp:"水", events:[] },
       { d:25, dow:"Thu", dow_jp:"木", events:[] },
-      { d:26, dow:"Fri", dow_jp:"金", events:[] },
+      { d:26, dow:"Fri", dow_jp:"金", events:[
+        {tag:"E", jp:"公開授業（午前）", en:"Open Classes (AM)"}
+      ]},
       { d:27, dow:"Sat", dow_jp:"土", events:[] },
       { d:28, dow:"Sun", dow_jp:"日", events:[] },
     ]
@@ -863,11 +870,17 @@ const schedule = [
         {tag:"E", jp:"R10学校説明会①", en:"R10 School Info Session #1"}
       ]},
       { d:7, dow:"Sun", dow_jp:"日", events:[] },
-      { d:8, dow:"Mon", dow_jp:"月", events:[] },
+      { d:8, dow:"Mon", dow_jp:"月", events:[
+        {tag:"", jp:"計画休業", en:"Planned Holiday", type:"planned"}
+      ]},
       { d:9, dow:"Tue", dow_jp:"火", events:[] },
-      { d:10, dow:"Wed", dow_jp:"水", events:[] },
+      { d:10, dow:"Wed", dow_jp:"水", events:[
+        {tag:"E", jp:"Parents Day（G2）", en:"Parents Day (G2)"}
+      ]},
       { d:11, dow:"Thu", dow_jp:"木", events:[] },
-      { d:12, dow:"Fri", dow_jp:"金", events:[] },
+      { d:12, dow:"Fri", dow_jp:"金", events:[
+        {tag:"E", jp:"Parents Day（G1・G3）", en:"Parents Day (G1 & G3)"}
+      ]},
       { d:13, dow:"Sat", dow_jp:"土", events:[] },
       { d:14, dow:"Sun", dow_jp:"日", events:[] },
       { d:15, dow:"Mon", dow_jp:"月", events:[] },
@@ -1102,15 +1115,23 @@ function getDayClass(dow) {
 }
 
 function getRowClass(day) {
-  if (day.holiday && !day.onBreak) return 'row-holiday';
-  if (day.onBreak || day.closed) return 'row-closed';
+  if (day.holiday && !day.onBreak && !day.kgBreak) return 'row-holiday';
+  if (day.dow === 'Sat' || day.dow === 'Sun') return 'row-weekend';
+  return '';
+}
+
+function isSummitClosed(day) {
+  if (day.onBreak || day.closed) return true;
   if (day.events) {
     for (const e of day.events) {
-      if (e.type === 'break') return 'row-break';
-      if (e.type === 'summit') return 'row-summit';
+      if (e.type === 'break' || e.type === 'planned') return true;
     }
   }
-  return '';
+  return false;
+}
+
+function isKgClosed(day) {
+  return !!day.kgBreak;
 }
 
 function renderEvents(events, lang) {
@@ -1163,31 +1184,33 @@ function render() {
 
       html += `<tr class="${rowClass}">`;
       html += `<td class="col-date ${dayClass}">${day.d}</td>`;
-      html += `<td class="col-day ${dayClass}">${day.dow_jp} / ${day.dow}</td>`;
+      html += `<td class="col-day ${dayClass}">${day.dow}</td>`;
 
       // --- Summit Academy columns ---
+      const sClosed = isSummitClosed(day);
+      const sCellCls = sClosed ? ' cell-closed' : '';
       if (day.onBreak && (!day.events || day.events.length === 0 || day.events.every(e => e.type === 'break')) && !day.holiday) {
         const extra = day.closed ? ' / 閉校' : '';
         const extraEn = day.closed ? ' / School Closed' : '';
-        html += `<td class="col-summit-jp"><span class="tag tag-closed">休</span> ${day.onBreak.jp}${extra}</td>`;
-        html += `<td class="col-summit-en"><span class="tag tag-closed">Break</span> ${day.onBreak.en}${extraEn}</td>`;
+        html += `<td class="col-summit-jp${sCellCls}"><span class="tag tag-closed">休</span> ${day.onBreak.jp}${extra}</td>`;
+        html += `<td class="col-summit-en${sCellCls}"><span class="tag tag-closed">Break</span> ${day.onBreak.en}${extraEn}</td>`;
       } else if (day.onBreak && day.holiday) {
         const parts = day.holiday.split(' / ');
-        html += `<td class="col-summit-jp"><span class="tag tag-closed">休</span> ${day.onBreak.jp} — ${parts[0]}</td>`;
-        html += `<td class="col-summit-en"><span class="tag tag-closed">Break</span> ${day.onBreak.en} — ${parts[1] || parts[0]}</td>`;
+        html += `<td class="col-summit-jp${sCellCls}"><span class="tag tag-closed">休</span> ${day.onBreak.jp} — ${parts[0]}</td>`;
+        html += `<td class="col-summit-en${sCellCls}"><span class="tag tag-closed">Break</span> ${day.onBreak.en} — ${parts[1] || parts[0]}</td>`;
       } else if (day.onBreak && day.events && day.events.length > 0) {
-        html += `<td class="col-summit-jp"><span class="tag tag-closed">休</span> ${day.onBreak.jp}<br>${renderEvents(day.events.filter(e => e.type !== 'break'), 'jp')}</td>`;
-        html += `<td class="col-summit-en"><span class="tag tag-closed">Break</span> ${day.onBreak.en}<br>${renderEvents(day.events.filter(e => e.type !== 'break'), 'en')}</td>`;
+        html += `<td class="col-summit-jp${sCellCls}"><span class="tag tag-closed">休</span> ${day.onBreak.jp}<br>${renderEvents(day.events.filter(e => e.type !== 'break'), 'jp')}</td>`;
+        html += `<td class="col-summit-en${sCellCls}"><span class="tag tag-closed">Break</span> ${day.onBreak.en}<br>${renderEvents(day.events.filter(e => e.type !== 'break'), 'en')}</td>`;
       } else if (day.holiday) {
         const parts = day.holiday.split(' / ');
         html += `<td class="col-summit-jp holiday-text">${parts[0]}</td>`;
         html += `<td class="col-summit-en holiday-text">${parts[1] || parts[0]}</td>`;
       } else if (day.closed && (!day.events || day.events.length === 0)) {
-        html += `<td class="col-summit-jp"><span class="tag tag-closed">閉校</span> 閉校日</td>`;
-        html += `<td class="col-summit-en"><span class="tag tag-closed">Closed</span> School Closed</td>`;
+        html += `<td class="col-summit-jp${sCellCls}"><span class="tag tag-closed">閉校</span> 閉校日</td>`;
+        html += `<td class="col-summit-en${sCellCls}"><span class="tag tag-closed">Closed</span> School Closed</td>`;
       } else if (day.events && day.events.length > 0) {
-        html += `<td class="col-summit-jp">${renderEvents(day.events, 'jp')}</td>`;
-        html += `<td class="col-summit-en">${renderEvents(day.events, 'en')}</td>`;
+        html += `<td class="col-summit-jp${sCellCls}">${renderEvents(day.events, 'jp')}</td>`;
+        html += `<td class="col-summit-en${sCellCls}">${renderEvents(day.events, 'en')}</td>`;
       } else {
         html += `<td class="col-summit-jp no-event">—</td>`;
         html += `<td class="col-summit-en no-event">—</td>`;
@@ -1198,14 +1221,16 @@ function render() {
 
       // --- Kindergarten columns ---
       const kgEvts = getKgEvents(month.month_en, day.d);
+      const kClosed = isKgClosed(day);
+      const kCellCls = kClosed ? ' cell-closed' : '';
       if (day.kgBreak && !kgEvts) {
-        html += `<td class="col-kg-jp"><span class="tag tag-closed">休</span> ${day.kgBreak.jp}</td>`;
-        html += `<td class="col-kg-en"><span class="tag tag-closed">Break</span> ${day.kgBreak.en}</td>`;
+        html += `<td class="col-kg-jp${kCellCls}"><span class="tag tag-closed">休</span> ${day.kgBreak.jp}</td>`;
+        html += `<td class="col-kg-en${kCellCls}"><span class="tag tag-closed">Break</span> ${day.kgBreak.en}</td>`;
       } else if (day.kgBreak && kgEvts) {
         const kgJp = kgEvts.map(e => `<span class="tag tag-kg">KG</span>${e.jp}`).join('<br>');
         const kgEn = kgEvts.map(e => `<span class="tag tag-kg">KG</span>${e.en}`).join('<br>');
-        html += `<td class="col-kg-jp"><span class="tag tag-closed">休</span> ${day.kgBreak.jp}<br>${kgJp}</td>`;
-        html += `<td class="col-kg-en"><span class="tag tag-closed">Break</span> ${day.kgBreak.en}<br>${kgEn}</td>`;
+        html += `<td class="col-kg-jp${kCellCls}"><span class="tag tag-closed">休</span> ${day.kgBreak.jp}<br>${kgJp}</td>`;
+        html += `<td class="col-kg-en${kCellCls}"><span class="tag tag-closed">Break</span> ${day.kgBreak.en}<br>${kgEn}</td>`;
       } else if (day.holiday) {
         const parts = day.holiday.split(' / ');
         html += `<td class="col-kg-jp holiday-text">${parts[0]}</td>`;
@@ -1235,7 +1260,7 @@ document.addEventListener('DOMContentLoaded', render);
 <div id="app"></div>
 
 <div class="year-summary">
-  <strong>Summit Academy 年間登校日数 / Total School Days: 202 (G2/G3: 201)</strong>
+  <strong>Summit Academy 年間登校日数 / Total School Days: 200 (G2/G3: 199)</strong>
 </div>
 
 </body>
